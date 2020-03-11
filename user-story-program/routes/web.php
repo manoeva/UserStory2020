@@ -11,6 +11,29 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+//kelola project
+Route::group(['prefix' => '/'], function () {
+  Route::get('/', 'ProjectController@index')->name('project.index');
+  Route::post('/create', 'ProjectController@store')->name('project.store');
+  Route::get('/{project_id}', 'ProjectController@show')->name('project.show');
+  Route::post('/update/{id}', 'ProjectController@update')->name('project.update');
+  Route::post('/delete', 'ProjectController@destroy')->name('project.destroy');
+  // kelola fitur
+  Route::group(['prefix' => '/{project_id}'], function () {
+    Route::post('/create', 'FeatureController@store')->name('feature.store');
+    Route::get('/{feature_id}', 'FeatureController@show')->name('feature.show');
+    Route::post('/update/{id}', 'FeatureController@update')->name('feature.update');
+    Route::get('/delete/{id}', 'FeatureController@destroy')->name('feature.destroy');
+    //kelola skenario
+    Route::group(['prefix' => '/{feature_id}'], function () {
+      Route::post('/create', 'ScenarioController@store')->name('scenario.store');
+      Route::get('/{scenario_id}', 'ScenarioController@show')->name('scenario.show');
+      Route::post('/update/{id}', 'ScenarioController@update')->name('scenario.update');
+      Route::get('/delete/{id}', 'ScenarioController@destroy')->name('scenario.destroy');
+    });
+  });
 });
