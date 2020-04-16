@@ -138,4 +138,35 @@ class ScenarioController extends Controller
     {
         //
     }
+
+    
+    public function get_html($id, $index)
+    {
+        $db = new FirestoreClient([
+            'projectId' => 'userstory-b84d4',
+        ]);
+        
+        $userStories = $db->collection('projects')->document($project_id)->collection('userStories')
+                       ->document($id)->snapshot();
+        $scenario = $userStories->scenarios[$index];
+        
+        $given = $scenario->given;
+        $when = $scenario->when;
+        $then = $scenario->then;
+        
+        for ($i=0; $i <count($given) ; $i++) {
+            
+        }
+        
+        
+        for ($i=0; $i <count($when) ; $i++) {
+            
+        }
+        
+        
+        for ($i=0; $i <count($then) ; $i++) {
+            
+        }
+        
+    }
 }
